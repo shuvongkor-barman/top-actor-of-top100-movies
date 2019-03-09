@@ -1,8 +1,8 @@
 /* Create table about the people and what they do here */
 
 CREATE TABLE movies (
-movie_id INTEGER NOT NULL PRIMARY KEY,
-movie_title TEXT,
+id INTEGER NOT NULL PRIMARY KEY,
+title TEXT,
 released_year NUMERIC,
 budget NUMERIC,
 total_gross NUMERIC
@@ -22,7 +22,7 @@ roll TEXT
 );
 
 
-INSERT INTO movies(movie_id, movie_title, released_year, budget, total_gross)
+INSERT INTO movies(id, title, released_year, budget, total_gross)
 VALUES
 (01, "Avatar", 2009, 237, 2788),
 (02, "Titanic", 1997, 200, 2187),
@@ -33,7 +33,7 @@ VALUES
 (07, "Furious 7", 2015, 190, 1516),
 (08, "Avengers: Age of Ultron", 2015, 365, 1405),
 (09, "Black Panther", 2018, 210, 1347),
-(10, "Harry Potter and the Deathly Hallows – Part 2", 2011, 250, 1341),
+(10, "Harry Potter and the Deathly Hallows : Part 2", 2011, 250, 1341),
 (11, "Star Wars: The Last Jedi", 2017, 317, 1333),
 (12, "Jurassic World: Fallen Kingdom", 2018, 187, 1309),
 
@@ -52,7 +52,7 @@ VALUES
 (41, "The Jungle Book", 2016, 175, 966),
 (43, "Jumanji: Welcome to the Jungle", 2017, 150, 962.1),
 
-(44, "Harry Potter and the Deathly Hallows – Part 1", 2010, 250, 960.3),
+(44, "Harry Potter and the Deathly Hallows : Part 1", 2010, 250, 960.3),
 (48, "Harry Potter and the Order of the Phoenix", 2007, 150, 939.9),
 (49, "Harry Potter and the Half-Blood Prince", 2009, 250, 934.4),
 
@@ -107,7 +107,6 @@ VALUES
 (1004, 03, "Han Solo"),
 (1004, 11, "Han Solo"),
 
-
 (1020, 03, "Kylo Ren"),
 (1020, 11, "Kylo Ren"),
 (1006, 03, "Rey"),
@@ -152,19 +151,9 @@ VALUES
 (1013, 04, "Peter Quill / Star-Lord"),
 
 
-(1005, 11, "Luke Skywalker"),
-(1006, 11, "Rey"),
-(1020, 11, "Kylo Ren"),
-
 (1007, "Robert Downey Jr.", "Iron Man"),
 (1008, "Chris Hemsworth", "Thor"),
 (1009, "Chris Pratt", "Owen Grady"),
-(1010, "Sam", "Jake"),
-(1011, "Sam", "Jake"),
-(1012, "Sam", "Jake"),
-(1013, "Sam", "Jake"),
-(1014, "Sam", "Jake"),
-(1015, "Sam", "Jake"),
 
 (1023, 53, "Peter Parker / Spider-Man"),
 
@@ -202,4 +191,63 @@ VALUES
 ;
 
 
+
+
+SELECT * FROM movies;
+
+SELECT * FROM actors;
+
+SELECT * FROM movie_cast;
+
+
+SELECT actors.first_name, actors.last_name, movies.title
+FROM movie_cast
+JOIN actors
+on actors.id = movie_cast.actor_id
+
+JOIN movies
+on movies.id = movie_cast.movie_id
+
+order by actor.first_name, actor.last_name;
+
+
+SELECT actors.first_name, actors.last_name,  movies.title, released_year as year, roll
+FROM movie_cast
+JOIN actors
+on actors.id = movie_cast.actor_id
+
+JOIN movies
+on movies.id = movie_cast.movie_id
+
+where actors.first_name = "Robert" and
+actors.last_name = "Downey Jr."
+order by released_year desc
+;
+
+
+SELECT actors.first_name, actors.last_name, title, budget, total_gross, released_year as year
+
+from actors
+join movie_cast
+on actors.id = movie_cast.actor_id
+
+join movies
+on movies.id = movie_cast.movie_id
+
+where total_gross > 2000
+order by total_gross desc;
+
+
+
+
+
+SELECT actors.first_name, actors.last_name, title, budget, Max(total_gross), released_year as year
+
+from actors
+join movie_cast
+on actors.id = movie_cast.actor_id
+
+join movies
+on movies.id = movie_cast.movie_id
+;
 
